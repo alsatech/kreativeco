@@ -59,7 +59,7 @@ export default {
       if (!confirm("¿Seguro que deseas eliminar esta publicación?")) return;
 
       try {
-        const token = localStorage.getItem("token"); // Obtener el token del usuario
+        const token = localStorage.getItem("token");
         const response = await axiosInstance.delete('publications', {
           headers: { Authorization: `Bearer ${token}` },
           data: { id }
@@ -68,7 +68,6 @@ export default {
         console.log("🗑 Publicación eliminada:", response.data);
         alert(response.data.message);
         
-        // Remover la publicación eliminada del array sin recargar la página
         this.publicaciones = this.publicaciones.filter(pub => pub.id !== id);
       } catch (err) {
         console.error("❌ Error al eliminar la publicación:", err.response);
@@ -83,7 +82,7 @@ export default {
 </script>
 
 <style scoped>
-/* Fondo negro para combinar con el Login */
+
 .publicaciones-container {
   background-color: #000;
   color: #fff;
@@ -94,14 +93,14 @@ export default {
   align-items: center;
 }
 
-/* Estilo del título */
+
 .titulo {
   font-size: 2rem;
-  color: #ff69b4; /* Rosa */
+  color: #ff69b4; 
   margin-bottom: 1rem;
 }
 
-/* Botón de agregar publicación */
+
 .acciones {
   margin-bottom: 1rem;
 }
@@ -119,7 +118,7 @@ button:hover {
   opacity: 0.9;
 }
 
-/* Lista de publicaciones */
+
 .listado {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -140,7 +139,7 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* Mensajes de error y carga */
+
 .error {
   color: red;
 }
