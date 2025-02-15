@@ -37,11 +37,11 @@ export default {
           password: this.password
         });
 
-        // Guardar el token y el user_id en localStorage
+        
         localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user_id', response.data.user.id); // Guarda el ID del usuario
+        localStorage.setItem('user_id', response.data.user.id); 
 
-        this.$router.push('/publicaciones'); // Redirigir al listado de publicaciones
+        this.$router.push('/publicaciones'); 
       } catch (err) {
         this.error = err.response?.data?.message || 'Error en la petición';
       }
@@ -53,7 +53,7 @@ export default {
 
 
 <style scoped>
-/* Fondo negro para el contenedor completo */
+
 .login-container {
   background-color: #000;
   color: #fff;
@@ -64,14 +64,14 @@ export default {
   justify-content: center;
 }
 
-/* Estilo para la "K" grande en rosa */
+
 .logo {
   font-size: 6rem;
-  color: #ff69b4; /* Rosa, puedes ajustar el tono */
+  color: #ff69b4; 
   margin-bottom: 1rem;
 }
 
-/* Opcional: estilos para el formulario */
+
 .form-group {
   margin-bottom: 1rem;
 }
@@ -89,7 +89,7 @@ button {
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 4px;
-  background-color: #9c215f; /* Botón rosa */
+  background-color: #9c215f; 
   color: #fff;
   cursor: pointer;
 }
