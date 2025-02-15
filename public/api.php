@@ -43,7 +43,7 @@ switch ($method) {
     case 'DELETE':
             if ($request[0] === 'users') {
                 deleteUser();
-            } elseif ($request[0] === 'publications') {  // 🔹 Agregado aquí
+            } elseif ($request[0] === 'publications') { 
                 deletePublication();
             }
         break;
@@ -52,7 +52,7 @@ switch ($method) {
         echo json_encode(["message" => "Método no permitido"]);
         break;
 }
-// Función para obtener usuarios
+
 function getUsers() {
     global $pdo;
     $stmt = $pdo->query("SELECT id, username, email, role_id FROM users");
@@ -63,16 +63,16 @@ function register() {
     global $pdo;
     $data = json_decode(file_get_contents("php://input"), true);
 
-    // Validar datos obligatorios
+
     if (!isset($data['nombre'], $data['apellido'], $data['email'], $data['password'], $data['rol'])) {
         echo json_encode(["message" => "Faltan datos obligatorios"]);
         return;
     }
 
-    // Encriptar contraseña
+    
     $passwordHash = password_hash($data['password'], PASSWORD_DEFAULT);
 
-    // Verificar si el correo ya existe
+    
     $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->execute([$data['email']]);
     if ($stmt->fetch()) {
@@ -80,7 +80,7 @@ function register() {
         return;
     }
 
-    // Verificar si el rol existe
+    
     $stmt = $pdo->prepare("SELECT id FROM roles WHERE nombre = ?");
     $stmt->execute([$data['rol']]);
     $role = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -89,7 +89,7 @@ function register() {
         return;
     }
 
-    // Insertar usuario en la base de datos
+    
     $stmt = $pdo->prepare("INSERT INTO users (nombre, apellido, email, password, role_id) VALUES (?, ?, ?, ?, ?)");
     
     if ($stmt->execute([$data['nombre'], $data['apellido'], $data['email'], $passwordHash, $role['id']])) {
@@ -109,7 +109,7 @@ function login() {
         return;
     }
 
-    // Verificar si el usuario existe
+    
     $stmt = $pdo->prepare("SELECT u.id, u.nombre, u.apellido, u.email, u.password, r.nombre as role 
                            FROM users u 
                            JOIN roles r ON u.role_id = r.id 
@@ -119,20 +119,20 @@ function login() {
 
     if ($user && md5($data['password']) === $user['password']) {
 
-        // Crear el payload con la información del usuario
+        
         $payload = [
             "id" => $user['id'],
             "nombre" => $user['nombre'],
             "apellido" => $user['apellido'],
             "email" => $user['email'],
             "role" => $user['role'],
-            "exp" => time() + 3600 // Expira en 1 hora
+            "exp" => time() + 3600 
         ];
 
-        // Generar el JWT
+        
         $token = encodeJWT($payload);
 
-        // Devolver el token y los datos del usuario
+        
         echo json_encode([
             "token" => $token,
             "user" => [
@@ -151,7 +151,7 @@ function login() {
 function createPublication() {
     global $pdo;
 
-    // Obtener los datos de la solicitud
+    
     $data = json_decode(file_get_contents("php://input"), true);
 
     if (!isset($data['user_id'], $data['titulo'], $data['descripcion'])) {
@@ -159,17 +159,17 @@ function createPublication() {
         exit;
     }
 
-    // Convertir user_id a número (porque podría llegar como string)
+    
     $data['user_id'] = intval($data['user_id']);
 
-    // Insertar la publicación en la base de datos
+    
     $stmt = $pdo->prepare("INSERT INTO publicaciones (user_id, titulo, descripcion) VALUES (?, ?, ?)");
     $result = $stmt->execute([$data['user_id'], $data['titulo'], $data['descripcion']]);
 
     if ($result) {
         echo json_encode(["message" => "✅ Publicación creada con éxito"]);
     } else {
-        // Capturar el error de MySQL
+        
         $error = $stmt->errorInfo();
         echo json_encode([
             "message" => "❌ Error al crear la publicación",
@@ -185,13 +185,13 @@ function deletePublication() {
     global $pdo;
     
     
-    // Verificar si el rol del usuario tiene permisos para eliminar publicaciones
+    
     if ($userData['role'] !== 'alto' && $userData['role'] !== 'alto medio') {
         echo json_encode(["message" => "No tienes permisos para eliminar publicaciones"]);
         return;
     }
     
-    // Obtener el ID de la publicación a eliminar
+   
     $data = json_decode(file_get_contents("php://input"), true);
     
     if (!isset($data['id'])) {
@@ -199,7 +199,7 @@ function deletePublication() {
         return;
     }
     
-    // Verificar si la publicación existe
+    
     $stmt = $pdo->prepare("SELECT * FROM publicaciones WHERE id = ?");
     $stmt->execute([$data['id']]);
     $publication = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -209,11 +209,11 @@ function deletePublication() {
         return;
     }
     
-    // Marcar la publicación como eliminada lógicamente
+    
     $stmt = $pdo->prepare("UPDATE publicaciones SET deleted_at = NOW() WHERE id = ?");
     $stmt->execute([$data['id']]);
     
-    // Confirmar que la publicación fue eliminada lógicamente
+    
     echo json_encode(["message" => "Publicación eliminada lógicamente con éxito"]);
 }
 
@@ -222,7 +222,7 @@ function deletePublication() {
 function getPublications() {
     global $pdo;
 
-    // Consulta SQL para obtener las publicaciones con la información del usuario que la creó
+    
     $stmt = $pdo->prepare("
         SELECT p.id, p.titulo, p.descripcion, p.created_at, u.nombre AS user_name, r.nombre AS user_role
         FROM publicaciones p
@@ -233,7 +233,7 @@ function getPublications() {
     $stmt->execute();
     $publications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Devolver las publicaciones en formato JSON
+    
     echo json_encode(["publications" => $publications]);
 }
 
