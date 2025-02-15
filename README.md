@@ -9,5 +9,12 @@
 ### 📌 Publicaciones
 ![Publicaciones](assets/publicaciones.png)
 
-### 📌 Dashboard
-![Dashboard](assets/dashboard.png)
+### 📌 Crear publicacion
+![Dashboard](assets/endpoint 3 front.png)
+
+### 📌 TESTING ENDPOINTS
+![Dashboard](assets/endpoint 1.png)
+### 📌 TESTING ENDPOINTS
+![Dashboard](assets/endpoint 2.png)
+### 📌 TESTING
+![Dashboard](assets/endpoint 3.png)
