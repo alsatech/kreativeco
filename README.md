@@ -10,12 +10,12 @@
 ![Publicaciones](assets/publicaciones.png)
 
 ### 📌 Crear publicacion
-![Dashboard](assets/endpoint 3 front.png)
+![Dashboard](assets/endpointfront.png)
 
 
 ### 📌 TESTING ENDPOINTS
-![Dashboard](assets/endpoint 1.png)
+![Dashboard](assets/endpointI.png)
 ### 📌 TESTING ENDPOINTS
-![Dashboard](assets/endpoint 2.png)
+![Dashboard](assets/endpointII.png)
 ### 📌 TESTING
-![Dashboard](assets/endpoint 3 .png)
+![Dashboard](assets/endpoint.png)
