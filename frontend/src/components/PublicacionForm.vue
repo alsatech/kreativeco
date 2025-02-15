@@ -1,6 +1,6 @@
 <template>
   <div class="publicacion-container">
-    <h1>📢 Crear Publicación</h1>
+    <h1>Crear Publicación</h1>
 
     <form @submit.prevent="crearPublicacion" class="publicacion-form">
       <label for="titulo">Título</label>
@@ -9,13 +9,13 @@
       <label for="descripcion">Descripción</label>
       <textarea id="descripcion" v-model="descripcion" rows="3" required></textarea>
 
-      <button type="submit">📌 Publicar</button>
+      <button type="submit"> Publicar</button>
     </form>
 
     <p v-if="mensaje" class="success">{{ mensaje }}</p>
     <p v-if="error" class="error">{{ error }}</p>
 
-    <button @click="$router.push('/publicaciones')" class="volver-btn">🔙 Volver a Publicaciones</button>
+    <button @click="$router.push('/publicaciones')" class="volver-btn">Volver a Publicaciones</button>
   </div>
 </template>
 
@@ -35,9 +35,9 @@ export default {
   methods: {
     async crearPublicacion() {
       try {
-        const userId = localStorage.getItem("user_id"); // Recuperar el ID del usuario logueado
+        const userId = localStorage.getItem("user_id");
 
-        // Verificar si el user_id es correcto antes de enviarlo
+        
         console.log("Enviando publicación con user_id:", userId);
 
         if (!userId) {
@@ -65,7 +65,7 @@ export default {
 </script>
 
 <style scoped>
-/* Contenedor principal con Flexbox */
+
 .publicacion-container {
   background-color: #000;
   color: white;
@@ -77,14 +77,14 @@ export default {
   padding: 2rem;
 }
 
-/* Título */
+
 h1 {
   font-size: 2rem;
   margin-bottom: 1.5rem;
   color: #ff69b4;
 }
 
-/* Formulario */
+
 .publicacion-form {
   display: grid;
   gap: 1rem;
@@ -96,7 +96,7 @@ h1 {
   box-shadow: 0 4px 6px rgba(255, 105, 180, 0.3);
 }
 
-/* Estilos de inputs y textarea */
+
 .publicacion-form label {
   font-weight: bold;
   color: #ff69b4;
@@ -118,7 +118,7 @@ h1 {
   border: 2px solid #ff69b4;
 }
 
-/* Botón de publicar */
+
 .publicacion-form button {
   background-color: #ff69b4;
   color: white;
@@ -134,7 +134,7 @@ h1 {
   background-color: #e0579b;
 }
 
-/* Mensajes */
+
 .success {
   color: #4caf50;
   margin-top: 1rem;
@@ -145,7 +145,7 @@ h1 {
   margin-top: 1rem;
 }
 
-/* Botón de volver */
+
 .volver-btn {
   background-color: transparent;
   color: #ff69b4;
